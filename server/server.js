@@ -35,6 +35,20 @@ app.get('/api/book/:id',(req,res)=>{
 });
 
 
+app.patch('/api/book/:id', (req,res)=>{
+    const id = req.params.id;
+    const body = _.pick(req.body,['title','author','publisher','year']);
+    Book.findByIdAndUpdate(id,{$set:body},{new:true}).then((book)=>{
+        if(!book){
+            return res.status(404).send();
+        }
+        res.status(200).send(book);
+    }).catch((e)=>{
+        res.status(400).send();
+    });
+});
+
+
 app.listen(port, ()=>{
     console.log(`App running on port ${port}`)
 });
