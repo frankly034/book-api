@@ -17,6 +17,14 @@ app.post('/api/books',(req, res)=>{
     });
 });
 
+app.get('/api/books', (req,res)=>{
+    Book.find().then((books)=>{
+        res.status(200).send(books);
+    }).catch((e)=>{
+        res.status(500).send();
+    });
+});
+
 
 app.listen(port, ()=>{
     console.log(`App running on port ${port}`)
